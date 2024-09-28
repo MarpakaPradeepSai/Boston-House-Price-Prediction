@@ -30,7 +30,7 @@ with col3:
     LSTAT = st.number_input("LSTAT (percentage of lower status of the population)", min_value=0.0)
 
 with col4:
-    B = st.number_input("B (1000(Bk - 0.63)^2 where Bk is the proportion of Black residents)", min_value=0.0)
+    B = st.number_input("B (1000(Bk - 0.63)²; Bk = proportion of Black residents)", min_value=0.0)
 
 # Prepare the input data for prediction
 input_data = np.array([[CRIM, NOX, RM, AGE, DIS, TAX, PTRATIO, B, LSTAT]])
