@@ -9,8 +9,8 @@ scaler = joblib.load('scaler.pkl')
 # Define the input features
 st.title("Boston Housing Price Prediction")
 
-# Create columns for the inputs
-col1, col2, col3 = st.columns(3)
+# Create columns for the inputs (2 per row)
+col1, col2 = st.columns(2)
 
 with col1:
     CRIM = st.number_input("CRIM (per capita crime rate by town)", min_value=0.0)
@@ -22,8 +22,13 @@ with col2:
     DIS = st.number_input("DIS (weighted distances to five Boston employment centers)", min_value=0.0)
     TAX = st.number_input("TAX (full-value property tax rate per $10,000)", min_value=0)
 
+# Create a new row of columns for the next set of inputs
+col3, col4 = st.columns(2)
+
 with col3:
     PTRATIO = st.number_input("PTRATIO (pupil-teacher ratio by town)", min_value=0.0)
+    
+with col4:
     B = st.number_input("B (1000(Bk - 0.63)^2 where Bk is the proportion of Black residents)", min_value=0.0)
     LSTAT = st.number_input("LSTAT (percentage of lower status of the population)", min_value=0.0)
 
