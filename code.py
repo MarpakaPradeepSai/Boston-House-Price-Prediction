@@ -30,13 +30,17 @@ for i, feature in enumerate(feature_names):
 
 # When the user clicks the button, make a prediction
 if st.button("Predict"):
-    # Prepare the input data for the model
-    input_data = np.array([[feature_values[feature] if feature_values[feature] is not None else 0 for feature in feature_names]])
-    
-    # Make the prediction
-    prediction = model.predict(input_data)
-    
-    # Display the prediction
-    st.write(f"The predicted median value of homes is: ${prediction[0] * 1000:.2f}")
+    # Check for empty inputs
+    if any(value is None for value in feature_values.values()):
+        st.error("Please fill in all fields before making a prediction.")
+    else:
+        # Prepare the input data for the model
+        input_data = np.array([[feature_values[feature] for feature in feature_names]])
+        
+        # Make the prediction
+        prediction = model.predict(input_data)
+        
+        # Display the prediction
+        st.write(f"The predicted median value of homes is: ${prediction[0] * 1000:.2f}")
 
 # Run the app with `streamlit run app.py` in the terminal
