@@ -3,7 +3,7 @@ import joblib
 import numpy as np
 
 # Load the saved model
-model = joblib.load('ada_boost_model.pkl')
+model = joblib.load('adaboost_model.pkl')
 scaler = joblib.load('scaler.pkl')
 
 # Define the input features
