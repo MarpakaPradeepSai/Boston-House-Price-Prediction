@@ -1,7 +1,6 @@
 import streamlit as st
 import joblib
 import pandas as pd
-import numpy as np
 
 # Load the trained model and scaler
 model = joblib.load('best_adaboost_model.joblib')
@@ -41,7 +40,15 @@ features = pd.DataFrame({
     'LSTAT': [LSTAT]
 })
 
+# Ensure the feature DataFrame has the same columns as when fitting the scaler
+features = features.reindex(columns=[
+    'CRIM', 'NOX', 'RM', 'AGE', 'DIS', 'TAX', 'PTRATIO', 'B', 'LSTAT'
+])
+
 # Predict and display the result
 if st.button("Predict"):
-    prediction = predict(features)
-    st.write(f"The predicted MEDV value is: ${prediction[0] * 1000:.2f}")
+    try:
+        prediction = predict(features)
+        st.write(f"The predicted MEDV value is: ${prediction[0] * 1000:.2f}")
+    except Exception as e:
+        st.error(f"Error during prediction: {e}")
