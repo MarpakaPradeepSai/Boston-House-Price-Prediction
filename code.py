@@ -39,7 +39,7 @@ def main():
     # Create input fields for each feature
     feature_values = []
     for feature in feature_names:
-        value = st.number_input(f'Enter {feature}:', step=0.01, format="%.2f")
+        value = st.number_input(f'Enter {feature}:', step=0.01, format="%.6f")
         feature_values.append(value)
 
     if st.button('Predict Price'):
