@@ -2,11 +2,12 @@ import streamlit as st
 import joblib
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import StandardScaler
 
-# Load the trained model
+# Load the trained model and scaler
 model_filename = 'best_adaboost_model.pkl'
+scaler_filename = 'scaler.pkl'
 model = joblib.load(model_filename)
+scaler = joblib.load(scaler_filename)
 
 # Feature names based on the best features
 feature_names = ['CRIM', 'NOX', 'RM', 'AGE', 'DIS', 'TAX', 'PTRATIO', 'B', 'LSTAT']
@@ -16,9 +17,8 @@ def predict_medv(input_data):
     # Convert input data into a DataFrame
     input_df = pd.DataFrame([input_data], columns=feature_names)
     
-    # Scale the input data
-    scaler = StandardScaler()
-    input_scaled = scaler.fit_transform(input_df)
+    # Scale the input data using the same scaler
+    input_scaled = scaler.transform(input_df)
     
     # Make prediction
     prediction = model.predict(input_scaled)
@@ -37,3 +37,4 @@ if st.button("Predict"):
     # Predict and display the result
     medv_prediction = predict_medv(input_data)
     st.write(f"The predicted MEDV value is: ${medv_prediction * 1000:.2f}")
+
