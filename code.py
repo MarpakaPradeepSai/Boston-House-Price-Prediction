@@ -13,24 +13,24 @@ st.title("Boston Housing Price Prediction")
 col1, col2 = st.columns(2)
 
 with col1:
-    CRIM = st.number_input("CRIM (per capita crime rate by town)", min_value=0.0)
-    NOX = st.number_input("NOX (nitric oxides concentration)", min_value=0.0)
-    RM = st.number_input("RM (average number of rooms per dwelling)", min_value=0.0)
+    CRIM = st.number_input("CRIM (per capita crime rate by town)", min_value=0.0, value=None, format="%.2f", placeholder="Enter value")
+    NOX = st.number_input("NOX (nitric oxides concentration)", min_value=0.0, value=None, format="%.2f", placeholder="Enter value")
+    RM = st.number_input("RM (average number of rooms per dwelling)", min_value=0.0, value=None, format="%.2f", placeholder="Enter value")
 
 with col2:
-    AGE = st.number_input("AGE (owner-occupied units built before 1940)", min_value=0.0)
-    DIS = st.number_input("DIS (distances to Boston employment centers)", min_value=0.0)
-    TAX = st.number_input("TAX (full-value property tax rate per $10,000)", min_value=0)
+    AGE = st.number_input("AGE (owner-occupied units built before 1940)", min_value=0.0, value=None, format="%.2f", placeholder="Enter value")
+    DIS = st.number_input("DIS (distances to Boston employment centers)", min_value=0.0, value=None, format="%.2f", placeholder="Enter value")
+    TAX = st.number_input("TAX (full-value property tax rate per $10,000)", min_value=0, value=None, placeholder="Enter value")
 
 # Create a new row for the next set of inputs
 col3, col4 = st.columns(2)
 
 with col3:
-    PTRATIO = st.number_input("PTRATIO (pupil-teacher ratio by town)", min_value=0.0)
-    LSTAT = st.number_input("LSTAT (percentage of lower status of the population)", min_value=0.0)
+    PTRATIO = st.number_input("PTRATIO (pupil-teacher ratio by town)", min_value=0.0, value=None, format="%.2f", placeholder="Enter value")
+    LSTAT = st.number_input("LSTAT (percentage of lower status of the population)", min_value=0.0, value=None, format="%.2f", placeholder="Enter value")
 
 with col4:
-    B = st.number_input("B (1000(Bk - 0.63)²; Bk = proportion of Black residents)", min_value=0.0)
+    B = st.number_input("B (1000(Bk - 0.63)²; Bk = proportion of Black residents)", min_value=0.0, value=None, format="%.2f", placeholder="Enter value")
 
 # Prepare the input data for prediction
 input_data = np.array([[CRIM, NOX, RM, AGE, DIS, TAX, PTRATIO, B, LSTAT]])
