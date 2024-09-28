@@ -25,7 +25,7 @@ for i, feature in enumerate(feature_names):
             f"Enter {feature}:",
             min_value=0.0,
             value=None,  # Start with an empty field
-            format="%.4f"  # Keep the float format for input display
+            format="%.6f"  # Keep the float format for input display
         )
 
 # When the user clicks the button, make a prediction
