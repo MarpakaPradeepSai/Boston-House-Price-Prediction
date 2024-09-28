@@ -19,7 +19,7 @@ with col1:
 
 with col2:
     AGE = st.number_input("AGE (owner-occupied units built before 1940)", min_value=0.0)
-    DIS = st.number_input("DIS (weighted distances to five Boston employment centers)", min_value=0.0)
+    DIS = st.number_input("DIS (distances to Boston employment centers)", min_value=0.0)
     TAX = st.number_input("TAX (full-value property tax rate per $10,000)", min_value=0)
 
 # Create a new row for the next set of inputs
