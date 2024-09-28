@@ -2,16 +2,15 @@ import streamlit as st
 import joblib
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import StandardScaler
 
-# Load the trained model
+# Load the trained model and scaler
 model = joblib.load('best_adaboost_model.joblib')
+scaler = joblib.load('scaler.joblib')
 
 # Create a function to make predictions
 def predict(features):
-    # Scale the features
-    scaler = StandardScaler()
-    features_scaled = scaler.fit_transform(features)
+    # Scale the features using the loaded scaler
+    features_scaled = scaler.transform(features)
     return model.predict(features_scaled)
 
 # Streamlit app layout
