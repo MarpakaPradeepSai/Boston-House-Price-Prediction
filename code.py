@@ -66,6 +66,14 @@ st.markdown("""
 if st.button('Predict 🔍'):
     if input_data is not None:
         prediction = model.predict(input_data_scaled)
-        st.write(f"Predicted Median Value: ${prediction[0] * 1000:.2f}")
+        median_value = prediction[0] * 1000
+        
+        # Display the result in a styled box
+        st.markdown(f"""
+            <div style="background-color: green; padding: 20px; text-align: center; border-radius: 10px;">
+                <h3 style="color: white;">🎉 <strong>Predicted Median Value</strong></h3>
+                <p style="font-size: 24px; color: white;">${median_value:.2f}</p>
+            </div>
+        """, unsafe_allow_html=True)
     else:
         st.error("⚠️ Please enter valid numeric values for all fields.")
