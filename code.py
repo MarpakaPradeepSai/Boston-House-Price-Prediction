@@ -7,7 +7,7 @@ model = joblib.load('adaboost_model.pkl')
 scaler = joblib.load('scaler.pkl')
 
 # Define the input features
-st.title("Boston Housing Price Prediction")
+st.title("Boston House Price Prediction")
 
 # Create columns for the first set of inputs (2 per row)
 col1, col2 = st.columns(2)
