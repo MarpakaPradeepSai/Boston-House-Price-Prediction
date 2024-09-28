@@ -37,7 +37,3 @@ if st.button("Predict"):
     # Predict and display the result
     medv_prediction = predict_medv(input_data)
     st.write(f"The predicted MEDV value is: ${medv_prediction * 1000:.2f}")
-
-# Run the app
-if __name__ == '__main__':
-    st.run()
