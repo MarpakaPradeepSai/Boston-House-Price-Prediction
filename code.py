@@ -11,7 +11,7 @@ model = joblib.load('best_adaboost_model.pkl')
 feature_names = ['CRIM', 'NOX', 'RM', 'AGE', 'DIS', 'TAX', 'PTRATIO', 'B', 'LSTAT']
 
 # Load the original dataset to get the scaling parameters
-df = pd.read_csv('boston_housing.csv')  # Make sure to replace with your actual dataset file name
+df = pd.read_csv('HousingData.csv')  # Make sure to replace with your actual dataset file name
 X = df[feature_names]
 
 # Initialize the scaler with the original data
