@@ -10,14 +10,21 @@ model = joblib.load('best_adaboost_model.pkl')
 # Define the feature names (best features from your analysis)
 feature_names = ['CRIM', 'NOX', 'RM', 'AGE', 'DIS', 'TAX', 'PTRATIO', 'B', 'LSTAT']
 
+# Load the original dataset to get the scaling parameters
+df = pd.read_csv('boston_housing.csv')  # Make sure to replace with your actual dataset file name
+X = df[feature_names]
+
+# Initialize the scaler with the original data
+scaler = StandardScaler()
+scaler.fit(X)
+
 # Create a function to make predictions
 def predict_house_price(features):
     # Convert the features to a numpy array
     features_array = np.array(features).reshape(1, -1)
     
-    # Scale the features
-    scaler = StandardScaler()
-    features_scaled = scaler.fit_transform(features_array)
+    # Scale the features using the scaler fitted on the original data
+    features_scaled = scaler.transform(features_array)
     
     # Make prediction
     prediction = model.predict(features_scaled)
@@ -38,6 +45,10 @@ def main():
     if st.button('Predict Price'):
         prediction = predict_house_price(feature_values)
         st.success(f'The predicted median house price is: ${prediction:.2f}')
+
+    # Add a section to show the current feature values
+    st.write("Current feature values:")
+    st.write(pd.DataFrame([feature_values], columns=feature_names))
 
 if __name__ == '__main__':
     main()
