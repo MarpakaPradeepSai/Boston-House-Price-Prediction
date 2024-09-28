@@ -43,5 +43,6 @@ features = pd.DataFrame({
 
 # Predict and display the result
 if st.button("Predict"):
+    # Make sure to use only the features that were trained on
     prediction = predict(features)
     st.write(f"The predicted MEDV value is: ${prediction[0] * 1000:.2f}")
