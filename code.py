@@ -66,7 +66,7 @@ st.markdown("""
 if st.button('Predict 🔍'):
     if input_data is not None:
         prediction = model.predict(input_data_scaled)
-        median_value = prediction[0] * 1000
+        median_value = prediction[0]  # No multiplication by 1000
         
         # Display the result in a styled box
         st.markdown(f"""
