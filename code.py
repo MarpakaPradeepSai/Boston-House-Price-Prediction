@@ -26,6 +26,10 @@ TAX = st.number_input("TAX (Full-value property tax rate per $10,000)", min_valu
 PTRATIO = st.number_input("PTRATIO (Pupil-teacher ratio by town)", min_value=0.0)
 B = st.number_input("B (1000(Bk - 0.63)^2 where Bk is the proportion of Black residents by town)", min_value=0.0)
 LSTAT = st.number_input("LSTAT (% lower status of the population)", min_value=0.0)
+CHAS = 0  # Default value for unused features
+INDUS = 0  # Default value for unused features
+RAD = 0  # Default value for unused features
+ZN = 0  # Default value for unused features
 
 # Collect features into a DataFrame
 features = pd.DataFrame({
@@ -37,13 +41,12 @@ features = pd.DataFrame({
     'TAX': [TAX],
     'PTRATIO': [PTRATIO],
     'B': [B],
-    'LSTAT': [LSTAT]
+    'LSTAT': [LSTAT],
+    'CHAS': [CHAS],
+    'INDUS': [INDUS],
+    'RAD': [RAD],
+    'ZN': [ZN]
 })
-
-# Ensure the feature DataFrame has the same columns as when fitting the scaler
-features = features.reindex(columns=[
-    'CRIM', 'NOX', 'RM', 'AGE', 'DIS', 'TAX', 'PTRATIO', 'B', 'LSTAT'
-])
 
 # Predict and display the result
 if st.button("Predict"):
