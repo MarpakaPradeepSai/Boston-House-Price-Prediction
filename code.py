@@ -18,20 +18,23 @@ with st.form("input_form"):
     st.write("Enter the following features:")
     
     # Create input fields for each feature
-    crim = st.number_input('CRIM (Per capita crime rate)')
-    nox = st.number_input('NOX (Nitrogen oxide level)')
-    rm = st.number_input('RM (Average number of rooms)')
-    age = st.number_input('AGE (Proportion of owner-occupied units built prior to 1940)')
-    dis = st.number_input('DIS (Distance to employment centers)')
-    tax = st.number_input('TAX (Full-value property tax rate)')
-    ptratio = st.number_input('PTRATIO (Pupil/Teacher ratio)')
-    b = st.number_input('B (Proportion of blacks)')
-    lstat = st.number_input('LSTAT (Lower status of the population)')
+    crim = st.text_input('CRIM (Per capita crime rate)')
+    nox = st.text_input('NOX (Nitrogen oxide level)')
+    rm = st.text_input('RM (Average number of rooms)')
+    age = st.text_input('AGE (Proportion of owner-occupied units built prior to 1940)')
+    dis = st.text_input('DIS (Distance to employment centers)')
+    tax = st.text_input('TAX (Full-value property tax rate)')
+    ptratio = st.text_input('PTRATIO (Pupil/Teacher ratio)')
+    b = st.text_input('B (Proportion of blacks)')
+    lstat = st.text_input('LSTAT (Lower status of the population)')
 
     # Submit button
     submitted = st.form_submit_button("Predict")
 
 if submitted:
+    # Convert input values to float
+    crim, nox, rm, age, dis, tax, ptratio, b, lstat = map(float, [crim, nox, rm, age, dis, tax, ptratio, b, lstat])
+    
     # Create a DataFrame from the input values
     input_data = pd.DataFrame([[crim, nox, rm, age, dis, tax, ptratio, b, lstat]], columns=feature_names)
     
@@ -44,4 +47,4 @@ if submitted:
     prediction = loaded_model.predict(input_scaled)
     
     # Display the prediction
-    st.write(f"Predicted Median House Price: ${prediction[0]:.2f}")
+    st.write(f"Predicted Median House Price: {prediction[0]:.2f}")
