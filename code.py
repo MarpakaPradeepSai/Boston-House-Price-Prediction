@@ -72,7 +72,7 @@ if st.button('Predict 🔍'):
         st.markdown(f"""
             <div style="background-color: green; padding: 10px; text-align: center; border-radius: 10px;">
                 <h3 style="color: white; margin: 0;"><medium>Predicted Median Value</medium></h3>
-                <p style="font-size: 20px; color: white; margin: 10px 0;">${median_value:.2f}</p>
+                <p style="font-size: 20px; color: white; margin: 2px 0;">${median_value:.2f}</p>
             </div>
         """, unsafe_allow_html=True)
     else:
