@@ -45,10 +45,6 @@ def main():
     if st.button('Predict Price'):
         prediction = predict_house_price(feature_values)
         st.success(f'The predicted median house price is: ${prediction:.2f}')
-
-    # Add a section to show the current feature values
-    st.write("Current feature values:")
-    st.write(pd.DataFrame([feature_values], columns=feature_names))
-
+        
 if __name__ == '__main__':
     main()
