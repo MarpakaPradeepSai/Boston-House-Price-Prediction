@@ -68,11 +68,12 @@ if st.button('Predict 🔍'):
         prediction = model.predict(input_data_scaled)
         median_value = prediction[0]  # No multiplication by 1000
         
-        # Display the result in a styled box with reduced vertical size
+        # Display the result in a styled box in one line
         st.markdown(f"""
             <div style="background-color: green; padding: 10px; text-align: center; border-radius: 10px;">
-                <h3 style="color: white; margin: 0;"><medium>Predicted Median Value</medium></h3>
-                <p style="font-size: 20px; color: white; margin: 2px 0;">${median_value:.2f}</p>
+                <p style="font-size: 20px; color: white; margin: 0;">
+                    Predicted Median Value: <strong>${median_value:.2f}</strong>
+                </p>
             </div>
         """, unsafe_allow_html=True)
     else:
