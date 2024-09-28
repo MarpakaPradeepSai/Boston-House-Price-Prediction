@@ -1,50 +1,64 @@
 import streamlit as st
-import pandas as pd
 import numpy as np
+import pandas as pd
 import joblib
 from sklearn.preprocessing import StandardScaler
 
 # Load the saved model
 model = joblib.load('best_adaboost_model.pkl')
 
-# Define the feature names (best features from your analysis)
-feature_names = ['CRIM', 'NOX', 'RM', 'AGE', 'DIS', 'TAX', 'PTRATIO', 'B', 'LSTAT']
+# Streamlit app title
+st.title("House Price Prediction App")
 
-# Load the original dataset to get the scaling parameters
-df = pd.read_csv('HousingData.csv')  # Make sure to replace with your actual dataset file name
-X = df[feature_names]
+# Sidebar inputs
+st.sidebar.header("Input Features")
 
-# Initialize the scaler with the original data
+# Function to take user input
+def user_input_features():
+    CRIM = st.sidebar.number_input('CRIM', min_value=0.0, max_value=100.0, value=0.00632)
+    NOX = st.sidebar.number_input('NOX', min_value=0.0, max_value=1.0, value=0.538)
+    RM = st.sidebar.number_input('RM', min_value=0.0, max_value=10.0, value=6.575)
+    AGE = st.sidebar.number_input('AGE', min_value=0.0, max_value=100.0, value=65.2)
+    DIS = st.sidebar.number_input('DIS', min_value=0.0, max_value=12.0, value=4.0900)
+    TAX = st.sidebar.number_input('TAX', min_value=0.0, max_value=1000.0, value=296.0)
+    PTRATIO = st.sidebar.number_input('PTRATIO', min_value=0.0, max_value=30.0, value=15.3)
+    B = st.sidebar.number_input('B', min_value=0.0, max_value=500.0, value=396.90)
+    LSTAT = st.sidebar.number_input('LSTAT', min_value=0.0, max_value=40.0, value=4.98)
+
+    # Create a DataFrame with the input data
+    data = {
+        'CRIM': CRIM,
+        'NOX': NOX,
+        'RM': RM,
+        'AGE': AGE,
+        'DIS': DIS,
+        'TAX': TAX,
+        'PTRATIO': PTRATIO,
+        'B': B,
+        'LSTAT': LSTAT
+    }
+
+    features = pd.DataFrame(data, index=[0])
+    return features
+
+# Get user input
+input_df = user_input_features()
+
+# Display user input
+st.write("### Input Features")
+st.write(input_df)
+
+# Load the scaler and apply it to the input
 scaler = StandardScaler()
-scaler.fit(X)
+scaled_input = scaler.fit_transform(input_df)
 
-# Create a function to make predictions
-def predict_house_price(features):
-    # Convert the features to a numpy array
-    features_array = np.array(features).reshape(1, -1)
-    
-    # Scale the features using the scaler fitted on the original data
-    features_scaled = scaler.transform(features_array)
-    
-    # Make prediction
-    prediction = model.predict(features_scaled)
-    
-    return prediction[0]
+# Predict the house price using the model
+prediction = model.predict(scaled_input)
 
-# Streamlit app
-def main():
-    st.title('House Price Predictor')
-    st.write('Enter the following features to predict the median house price:')
+# Display the prediction
+st.write("### Predicted House Price")
+st.write(f"House price prediction: **${prediction[0]:,.2f}**")
 
-    # Create input fields for each feature
-    feature_values = []
-    for feature in feature_names:
-        value = st.number_input(f'Enter {feature}:', step=0.01, format="%.6f")
-        feature_values.append(value)
-
-    if st.button('Predict Price'):
-        prediction = predict_house_price(feature_values)
-        st.success(f'The predicted median house price is: ${prediction:.2f}')
-        
-if __name__ == '__main__':
-    main()
+# Running the streamlit app
+if __name__ == "__main__":
+    st.write("Ready to Predict!")
