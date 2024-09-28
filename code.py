@@ -1,38 +1,49 @@
 import streamlit as st
 import joblib
-import pandas as pd
 import numpy as np
+import pandas as pd
 
-# Load the saved model
+# Load the trained model
 model_filename = 'best_adaboost_model.pkl'
 model = joblib.load(model_filename)
 
-# List of features based on your dataset
-features = ['CRIM', 'NOX', 'RM', 'AGE', 'DIS', 'TAX', 'PTRATIO', 'B', 'LSTAT']
+# Define the feature names based on the best features you selected
+feature_names = ['CRIM', 'NOX', 'RM', 'AGE', 'DIS', 'TAX', 'PTRATIO', 'B', 'LSTAT']
 
-# Title of the app
+# Streamlit app title
 st.title("Boston Housing Price Prediction")
 
-# Input fields for each feature
-input_data = {}
-for feature in features:
-    input_data[feature] = st.number_input(f"Enter {feature}:", value=0.0)
+# Create input fields for each feature
+feature_values = {}
+for feature in feature_names:
+    if feature == 'CRIM':
+        feature_values[feature] = st.number_input(f"Enter {feature} (per capita crime rate by town):", min_value=0.0)
+    elif feature == 'NOX':
+        feature_values[feature] = st.number_input(f"Enter {feature} (nitric oxides concentration):", min_value=0.0)
+    elif feature == 'RM':
+        feature_values[feature] = st.number_input(f"Enter {feature} (average number of rooms per dwelling):", min_value=0.0)
+    elif feature == 'AGE':
+        feature_values[feature] = st.number_input(f"Enter {feature} (proportion of owner-occupied units built prior to 1940):", min_value=0.0)
+    elif feature == 'DIS':
+        feature_values[feature] = st.number_input(f"Enter {feature} (weighted distances to five Boston employment centers):", min_value=0.0)
+    elif feature == 'TAX':
+        feature_values[feature] = st.number_input(f"Enter {feature} (full-value property tax rate per $10,000):", min_value=0)
+    elif feature == 'PTRATIO':
+        feature_values[feature] = st.number_input(f"Enter {feature} (pupil-teacher ratio by town):", min_value=0.0)
+    elif feature == 'B':
+        feature_values[feature] = st.number_input(f"Enter {feature} (1000(Bk - 0.63)^2 where Bk is the proportion of Black residents):", min_value=0.0)
+    elif feature == 'LSTAT':
+        feature_values[feature] = st.number_input(f"Enter {feature} (% lower status of the population):", min_value=0.0)
 
-# Button to predict
+# When the user clicks the button, make a prediction
 if st.button("Predict"):
-    # Prepare input data for the model
-    input_df = pd.DataFrame([input_data])
+    # Prepare the input data for the model
+    input_data = np.array([[feature_values[feature] for feature in feature_names]])
     
-    # Scale the input data using the same scaler used during training
-    scaler = StandardScaler()
-    # Fit and transform the scaler on the training data (or save and load it if you want)
-    # Here we assume it was fit earlier; you might want to save the scaler similarly to the model.
-    # scaler.fit(X_train_scaled) # Uncomment this line if you have access to X_train_scaled
+    # Make the prediction
+    prediction = model.predict(input_data)
+    
+    # Display the prediction
+    st.write(f"The predicted median value of homes is: ${prediction[0] * 1000:.2f}")
 
-    input_scaled = scaler.fit_transform(input_df)  # For demo, you might want to load the scaler instead
-
-    # Make prediction
-    prediction = model.predict(input_scaled)
-
-    # Display the result
-    st.write(f"Predicted MEDV (House Price): ${prediction[0]:,.2f}")
+# Run the app with `streamlit run app.py` in the terminal
