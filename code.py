@@ -1,28 +1,36 @@
 import streamlit as st
 import joblib
 import numpy as np
-import pandas as pd
 
 # Load the saved model
-model = joblib.load('adaboost_model.pkl')
+model = joblib.load('ada_boost_model.pkl')
+scaler = joblib.load('scaler.pkl')
 
 # Define the input features
 st.title("Boston Housing Price Prediction")
-CRIM = st.number_input("CRIM (per capita crime rate by town)")
-NOX = st.number_input("NOX (nitric oxides concentration)")
-RM = st.number_input("RM (average number of rooms per dwelling)")
-AGE = st.number_input("AGE (proportion of owner-occupied units built prior to 1940)")
-DIS = st.number_input("DIS (weighted distances to five Boston employment centers)")
-TAX = st.number_input("TAX (full-value property tax rate per $10,000)")
-PTRATIO = st.number_input("PTRATIO (pupil-teacher ratio by town)")
-B = st.number_input("B (1000(Bk - 0.63)^2 where Bk is the proportion of Black residents)")
-LSTAT = st.number_input("LSTAT (percentage of lower status of the population)")
+
+# Create columns for the inputs
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    CRIM = st.number_input("CRIM (per capita crime rate by town)", min_value=0.0)
+    NOX = st.number_input("NOX (nitric oxides concentration)", min_value=0.0)
+    RM = st.number_input("RM (average number of rooms per dwelling)", min_value=0.0)
+
+with col2:
+    AGE = st.number_input("AGE (proportion of owner-occupied units built prior to 1940)", min_value=0.0)
+    DIS = st.number_input("DIS (weighted distances to five Boston employment centers)", min_value=0.0)
+    TAX = st.number_input("TAX (full-value property tax rate per $10,000)", min_value=0)
+
+with col3:
+    PTRATIO = st.number_input("PTRATIO (pupil-teacher ratio by town)", min_value=0.0)
+    B = st.number_input("B (1000(Bk - 0.63)^2 where Bk is the proportion of Black residents)", min_value=0.0)
+    LSTAT = st.number_input("LSTAT (percentage of lower status of the population)", min_value=0.0)
 
 # Prepare the input data for prediction
 input_data = np.array([[CRIM, NOX, RM, AGE, DIS, TAX, PTRATIO, B, LSTAT]])
 
 # Scale the input data
-scaler = joblib.load('scaler.pkl')  # Save the scaler during training and load here
 input_data_scaled = scaler.transform(input_data)
 
 # Predict the median value of homes
