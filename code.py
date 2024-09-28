@@ -22,23 +22,50 @@ cols = st.columns(3)
 for i, feature in enumerate(feature_names):
     with cols[i % 3]:  # Distribute features across columns
         if feature == 'CRIM':
-            feature_values[feature] = st.number_input(f"Enter {feature} (per capita crime rate by town):", min_value=0.0)
+            feature_values[feature] = st.number_input(
+                f"Enter {feature} (per capita crime rate by town):",
+                min_value=0.0
+            )
         elif feature == 'NOX':
-            feature_values[feature] = st.number_input(f"Enter {feature} (nitric oxides concentration):", min_value=0.0)
+            feature_values[feature] = st.number_input(
+                f"Enter {feature} (nitric oxides concentration):",
+                min_value=0.0
+            )
         elif feature == 'RM':
-            feature_values[feature] = st.number_input(f"Enter {feature} (average number of rooms per dwelling):", min_value=0.0)
+            feature_values[feature] = st.number_input(
+                f"Enter {feature} (average number of rooms per dwelling):",
+                min_value=0.0
+            )
         elif feature == 'AGE':
-            feature_values[feature] = st.number_input(f"Enter {feature} (proportion of owner-occupied units built prior to 1940):", min_value=0.0)
+            feature_values[feature] = st.number_input(
+                f"Enter {feature} (proportion of owner-occupied units built prior to 1940):",
+                min_value=0.0
+            )
         elif feature == 'DIS':
-            feature_values[feature] = st.number_input(f"Enter {feature} (weighted distances to five Boston employment centers):", min_value=0.0)
+            feature_values[feature] = st.number_input(
+                f"Enter {feature} (weighted distances to five Boston employment centers):",
+                min_value=0.0
+            )
         elif feature == 'TAX':
-            feature_values[feature] = st.number_input(f"Enter {feature} (full-value property tax rate per $10,000):", min_value=0)
+            feature_values[feature] = st.number_input(
+                f"Enter {feature} (full-value property tax rate per $10,000):",
+                min_value=0
+            )
         elif feature == 'PTRATIO':
-            feature_values[feature] = st.number_input(f"Enter {feature} (pupil-teacher ratio by town):", min_value=0.0)
+            feature_values[feature] = st.number_input(
+                f"Enter {feature} (pupil-teacher ratio by town):",
+                min_value=0.0
+            )
         elif feature == 'B':
-            feature_values[feature] = st.number_input(f"Enter {feature} (1000(Bk - 0.63)^2 where Bk is the proportion of Black residents):", min_value=0.0)
+            feature_values[feature] = st.number_input(
+                f"Enter {feature} (1000(Bk - 0.63)^2 where Bk is the proportion of Black residents):",
+                min_value=0.0
+            )
         elif feature == 'LSTAT':
-            feature_values[feature] = st.number_input(f"Enter {feature} (% lower status of the population):", min_value=0.0)
+            feature_values[feature] = st.number_input(
+                f"Enter {feature} (% lower status of the population):",
+                min_value=0.0
+            )
 
 # When the user clicks the button, make a prediction
 if st.button("Predict"):
