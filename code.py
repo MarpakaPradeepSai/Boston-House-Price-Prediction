@@ -38,7 +38,26 @@ input_data = np.array([[CRIM, NOX, RM, AGE, DIS, TAX, PTRATIO, B, LSTAT]])
 # Scale the input data
 input_data_scaled = scaler.transform(input_data)
 
-# Predict the median value of homes
-if st.button("Predict"):
+# Add custom CSS to change button color without hover or active effect
+st.markdown("""
+    <style>
+    .stButton > button {
+        background-color: #007bff; /* Bootstrap primary blue */
+        color: white !important; /* Text color */
+        border: none;
+        transition: none; /* Remove all transitions */
+    }
+    .stButton > button:focus,
+    .stButton > button:active,
+    .stButton > button:hover {
+        outline: none; /* Remove focus outline */
+        background-color: #007bff !important; /* Keep blue color on focus and active */
+        color: white !important; /* Keep text color */
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+# Predict button
+if st.button('Predict 🔍'):
     prediction = model.predict(input_data_scaled)
     st.write(f"Predicted Median Value: ${prediction[0] * 1000:.2f}")
