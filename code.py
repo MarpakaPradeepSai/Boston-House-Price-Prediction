@@ -47,7 +47,7 @@ if input_data is not None:
 st.markdown("""
     <style>
     .stButton > button {
-        background-color: #28a745; /* Green for the button */
+        background-color: #007bff; /* Bootstrap primary blue */
         color: white !important; /* Text color */
         border: none;
         transition: none; /* Remove all transitions */
@@ -56,7 +56,7 @@ st.markdown("""
     .stButton > button:active,
     .stButton > button:hover {
         outline: none; /* Remove focus outline */
-        background-color: #28a745 !important; /* Keep green color on focus and active */
+        background-color: #007bff !important; /* Keep blue color on focus and active */
         color: white !important; /* Keep text color */
     }
     </style>
@@ -68,9 +68,9 @@ if st.button('Predict 🔍'):
         prediction = model.predict(input_data_scaled)
         median_value = prediction[0]  # No multiplication by 1000
         
-        # Display the result in a styled box in one line with blue background
+        # Display the result in a styled box in one line
         st.markdown(f"""
-            <div style="background-color: #007bff; padding: 10px; text-align: center; border-radius: 10px;">
+            <div style="background-color: green; padding: 10px; text-align: center; border-radius: 10px;">
                 <p style="font-size: 20px; color: white; margin: 0;">
                     Predicted Median Value: <strong>${median_value:.2f}</strong>
                 </p>
