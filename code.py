@@ -13,30 +13,35 @@ st.title("Boston Housing Price Prediction")
 col1, col2 = st.columns(2)
 
 with col1:
-    CRIM = st.number_input("CRIM (per capita crime rate by town)", min_value=0.0, value=None, step=0.01, placeholder="Enter value")
-    NOX = st.number_input("NOX (nitric oxides concentration)", min_value=0.0, value=None, step=0.01, placeholder="Enter value")
-    RM = st.number_input("RM (average number of rooms per dwelling)", min_value=0.0, value=None, step=0.01, placeholder="Enter value")
+    CRIM = st.text_input("CRIM (per capita crime rate by town)", placeholder="Enter value")
+    NOX = st.text_input("NOX (nitric oxides concentration)", placeholder="Enter value")
+    RM = st.text_input("RM (average number of rooms per dwelling)", placeholder="Enter value")
 
 with col2:
-    AGE = st.number_input("AGE (owner-occupied units built before 1940)", min_value=0.0, value=None, step=0.01, placeholder="Enter value")
-    DIS = st.number_input("DIS (distances to Boston employment centers)", min_value=0.0, value=None, step=0.01, placeholder="Enter value")
-    TAX = st.number_input("TAX (full-value property tax rate per $10,000)", min_value=0, value=None, step=1, placeholder="Enter value")
+    AGE = st.text_input("AGE (owner-occupied units built before 1940)", placeholder="Enter value")
+    DIS = st.text_input("DIS (distances to Boston employment centers)", placeholder="Enter value")
+    TAX = st.text_input("TAX (full-value property tax rate per $10,000)", placeholder="Enter value")
 
 # Create a new row for the next set of inputs
 col3, col4 = st.columns(2)
 
 with col3:
-    PTRATIO = st.number_input("PTRATIO (pupil-teacher ratio by town)", min_value=0.0, value=None, step=0.01, placeholder="Enter value")
-    LSTAT = st.number_input("LSTAT (percentage of lower status of the population)", min_value=0.0, value=None, step=0.01, placeholder="Enter value")
+    PTRATIO = st.text_input("PTRATIO (pupil-teacher ratio by town)", placeholder="Enter value")
+    LSTAT = st.text_input("LSTAT (percentage of lower status of the population)", placeholder="Enter value")
 
 with col4:
-    B = st.number_input("B (1000(Bk - 0.63)²; Bk = proportion of Black residents)", min_value=0.0, value=None, step=0.01, placeholder="Enter value")
+    B = st.text_input("B (1000(Bk - 0.63)²; Bk = proportion of Black residents)", placeholder="Enter value")
 
 # Prepare the input data for prediction
-input_data = np.array([[CRIM, NOX, RM, AGE, DIS, TAX, PTRATIO, B, LSTAT]])
+try:
+    input_data = np.array([[float(CRIM), float(NOX), float(RM), float(AGE), float(DIS), 
+                             float(TAX), float(PTRATIO), float(B), float(LSTAT)]])
+except ValueError:
+    input_data = None  # Set to None if conversion fails
 
-# Scale the input data
-input_data_scaled = scaler.transform(input_data)
+# Scale the input data if it's valid
+if input_data is not None:
+    input_data_scaled = scaler.transform(input_data)
 
 # Add custom CSS to change button color without hover or active effect
 st.markdown("""
@@ -59,5 +64,8 @@ st.markdown("""
 
 # Predict button
 if st.button('Predict 🔍'):
-    prediction = model.predict(input_data_scaled)
-    st.write(f"Predicted Median Value: ${prediction[0] * 1000:.2f}")
+    if input_data is not None:
+        prediction = model.predict(input_data_scaled)
+        st.write(f"Predicted Median Value: ${prediction[0] * 1000:.2f}")
+    else:
+        st.error("⚠️ Please enter valid numeric values for all fields.")
