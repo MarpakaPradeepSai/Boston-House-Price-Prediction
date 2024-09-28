@@ -34,19 +34,24 @@ ZN = 0  # Default value for unused features
 # Collect features into a DataFrame
 features = pd.DataFrame({
     'CRIM': [CRIM],
+    'ZN': [ZN],
+    'INDUS': [INDUS],
+    'CHAS': [CHAS],
     'NOX': [NOX],
     'RM': [RM],
     'AGE': [AGE],
     'DIS': [DIS],
+    'RAD': [RAD],
     'TAX': [TAX],
     'PTRATIO': [PTRATIO],
     'B': [B],
-    'LSTAT': [LSTAT],
-    'CHAS': [CHAS],
-    'INDUS': [INDUS],
-    'RAD': [RAD],
-    'ZN': [ZN]
+    'LSTAT': [LSTAT]
 })
+
+# Ensure the feature DataFrame has the same columns in the correct order as when fitting the scaler
+features = features.reindex(columns=[
+    'CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT'
+])
 
 # Predict and display the result
 if st.button("Predict"):
