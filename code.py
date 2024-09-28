@@ -1,40 +1,43 @@
 import streamlit as st
 import pandas as pd
-import joblib
 import numpy as np
+import joblib
 from sklearn.preprocessing import StandardScaler
 
+# Load the saved model
+model = joblib.load('best_adaboost_model.pkl')
 
-# Load the trained model
-model_filename = 'best_adaboost_model.pkl'
-model = joblib.load(model_filename)
-
-# Define the feature names based on your best features
+# Define the feature names (best features from your analysis)
 feature_names = ['CRIM', 'NOX', 'RM', 'AGE', 'DIS', 'TAX', 'PTRATIO', 'B', 'LSTAT']
 
-# Function to make predictions
-def predict(input_data):
-    # Convert input data to DataFrame
-    input_df = pd.DataFrame([input_data], columns=feature_names)
+# Create a function to make predictions
+def predict_house_price(features):
+    # Convert the features to a numpy array
+    features_array = np.array(features).reshape(1, -1)
     
-    # Scale the input data
+    # Scale the features
     scaler = StandardScaler()
-    input_scaled = scaler.fit_transform(input_df)  # Ensure you use the same scaler used in training
-
+    features_scaled = scaler.fit_transform(features_array)
+    
     # Make prediction
-    prediction = model.predict(input_scaled)
+    prediction = model.predict(features_scaled)
+    
     return prediction[0]
 
 # Streamlit app
-st.title("Boston Housing Price Prediction")
-st.write("Enter the features below to predict the median value of homes:")
+def main():
+    st.title('House Price Predictor')
+    st.write('Enter the following features to predict the median house price:')
 
-# Input fields for each feature
-input_data = {}
-for feature in feature_names:
-    input_data[feature] = st.number_input(feature, value=0.0, format="%.2f")
+    # Create input fields for each feature
+    feature_values = []
+    for feature in feature_names:
+        value = st.number_input(f'Enter {feature}:', step=0.01, format="%.2f")
+        feature_values.append(value)
 
-# Button to predict
-if st.button("Predict"):
-    prediction = predict(input_data)
-    st.write(f"The predicted median value of homes is: ${prediction:.2f}")
+    if st.button('Predict Price'):
+        prediction = predict_house_price(feature_values)
+        st.success(f'The predicted median house price is: ${prediction:.2f}')
+
+if __name__ == '__main__':
+    main()
