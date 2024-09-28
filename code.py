@@ -6,9 +6,11 @@ import pandas as pd
 model = joblib.load('best_adaboost_model.joblib')
 scaler = joblib.load('scaler.joblib')
 
+# Define the best features
+best_features = ['CRIM', 'NOX', 'RM', 'AGE', 'DIS', 'TAX', 'PTRATIO', 'B', 'LSTAT']
+
 # Create a function to make predictions
 def predict(features):
-    # Scale the features using the loaded scaler
     features_scaled = scaler.transform(features)
     return model.predict(features_scaled)
 
@@ -26,32 +28,19 @@ TAX = st.number_input("TAX (Full-value property tax rate per $10,000)", min_valu
 PTRATIO = st.number_input("PTRATIO (Pupil-teacher ratio by town)", min_value=0.0)
 B = st.number_input("B (1000(Bk - 0.63)^2 where Bk is the proportion of Black residents by town)", min_value=0.0)
 LSTAT = st.number_input("LSTAT (% lower status of the population)", min_value=0.0)
-CHAS = 0  # Default value for unused features
-INDUS = 0  # Default value for unused features
-RAD = 0  # Default value for unused features
-ZN = 0  # Default value for unused features
 
-# Collect features into a DataFrame
+# Collect features into a DataFrame, only using the best features
 features = pd.DataFrame({
     'CRIM': [CRIM],
-    'ZN': [ZN],
-    'INDUS': [INDUS],
-    'CHAS': [CHAS],
     'NOX': [NOX],
     'RM': [RM],
     'AGE': [AGE],
     'DIS': [DIS],
-    'RAD': [RAD],
     'TAX': [TAX],
     'PTRATIO': [PTRATIO],
     'B': [B],
     'LSTAT': [LSTAT]
 })
-
-# Ensure the feature DataFrame has the same columns in the correct order as when fitting the scaler
-features = features.reindex(columns=[
-    'CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT'
-])
 
 # Predict and display the result
 if st.button("Predict"):
